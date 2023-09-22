@@ -31,7 +31,10 @@ namespace BE
         }
         public override Vacation HandleVacation(Vacation vacation)
         {
-            if (vacation.GetNumberOfDays() < 16)
+            if (vacation.GetStatus() == EnumVacationStatus.APPROVED)
+                throw new Exception("Vacation already approved");
+
+            if (vacation.GetNumberOfDays() < 15)
             {
                 vacation.Approve(this);
                 return vacation;

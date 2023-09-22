@@ -26,6 +26,7 @@ namespace UI
             employeeBLL = new EmployeeBLL();
             LoadDatagrid();
             createVacationButton.Enabled = false;
+            buttonApprove.Enabled = false;
         }
 
         public void LoadDatagrid()
@@ -72,6 +73,18 @@ namespace UI
 
         private void loginButton_Click(object sender, EventArgs e)
         {
+            if (loginButton.Text == "Logout")
+            {
+                usernameTextbox.Text = string.Empty;
+                usernameTextbox.Enabled = true;
+                createVacationButton.Enabled = false;
+                loggedEmployee = null;
+                loginButton.Text = "Login";
+                buttonApprove.Enabled = false;
+
+                return;
+            }
+
             string username = usernameTextbox.Text;
             if (username.Length == 0)
             {
@@ -83,6 +96,11 @@ namespace UI
             {
                 loggedEmployee = employeeBLL.Login(username);
                 createVacationButton.Enabled = true;
+                buttonApprove.Enabled = true;
+
+                usernameTextbox.Enabled = false;
+                loginButton.Text = "Logout";
+
             } catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
